@@ -5,7 +5,7 @@ let saveNoteBtn;
 let newNoteBtn;
 let noteList;
 
-if (window.location.pathname === '/notes') {
+if (typeof window !== "undefined" && window.location.pathname === '/notes') {
   noteForm = document.querySelector('.note-form');
   noteTitle = document.querySelector('.note-title');
   noteText = document.querySelector('.note-textarea');
@@ -27,9 +27,10 @@ const hide = (elem) => {
 
 // activeNote is used to keep track of the note in the textarea
 let activeNote = {};
+const baseURL = 'http://localhost:3001'
 
 const getNotes = () =>
-  fetch('/api/notes', {
+  fetch(`${baseURL}/api/notes`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json'
@@ -37,7 +38,7 @@ const getNotes = () =>
   });
 
 const saveNote = (note) =>
-  fetch('/api/notes', {
+  fetch(`${baseURL}/api/notes`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -46,7 +47,7 @@ const saveNote = (note) =>
   });
 
 const deleteNote = (id) =>
-  fetch(`/api/notes/${id}`, {
+  fetch(`${baseURL}/api/notes${id}`, {
     method: 'DELETE',
     headers: {
       'Content-Type': 'application/json'
@@ -184,7 +185,7 @@ const renderNoteList = async (notes) => {
 // Gets notes from the db and renders them to the sidebar
 const getAndRenderNotes = () => getNotes().then(renderNoteList);
 
-if (window.location.pathname === '/notes') {
+if (typeof window !== "undefined" && window.location.pathname === '/notes') {
   saveNoteBtn.addEventListener('click', handleNoteSave);
   newNoteBtn.addEventListener('click', handleNewNoteView);
   clearBtn.addEventListener('click', renderActiveNote);

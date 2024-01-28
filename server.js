@@ -23,7 +23,7 @@ app.get('*', (requestObj, responseObj) => {
 
 
 // Load API Routes
-app.use('/api', api_routes);
+app.use('/', api_routes);
 
 app.listen(PORT, () => {
     console.log('Server started on port', PORT)

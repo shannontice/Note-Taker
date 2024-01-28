@@ -4,11 +4,9 @@ const path = require('path');
 const router = require('express').Router();
 const { v4 } = require('uuid');
 const filePath = path.resolve(__dirname, '../db/db.json');
-const { getNotes, saveNote, deleteNote} = require('../public/assets/js/index')
 
 
-router.get('/notes', async (requestObj, responseObj) => {
-    const getNotes = await getNotes();
+router.get('api/notes', (requestObj, responseObj) => {
 
     fs.readFile(filePath, 'utf8', (err, data) => {
         if (err) {
@@ -17,14 +15,12 @@ router.get('/notes', async (requestObj, responseObj) => {
         else {
             const notes = JSON.parse(data);
             responseObj.json(notes);
-            getNotes();
         }
     })
 })
 
-router.post('/notes', async (requestObj, responseObj) => {
-    const saveNote = await saveNote();
-;
+router.post('api/notes', async (requestObj, responseObj) => {
+
     fs.readFile(filePath, 'utf8', (err, data) => {
         if (err) {
             console.log(err);
@@ -55,7 +51,6 @@ router.post('/notes', async (requestObj, responseObj) => {
 })
 
 router.delete('/notes/:id', async (requestObj, responseObj) => {
-    const deleteNote = await deleteNote();
 
     fs.readFile(filePath, 'utf8', (err, data) => {
         if (err) {
@@ -75,7 +70,6 @@ router.delete('/notes/:id', async (requestObj, responseObj) => {
                 console.log(err);
             }
             else {
-                deleteNote();
                 responseObj.send({
                     message: 'User Deleted Successfully!'
                 })
